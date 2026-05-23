@@ -83,3 +83,7 @@ Then read the controls that match the operation:
 - [`reference/tool-execution-policy.md`](reference/tool-execution-policy.md)
 - [`reference/human-approval-model.md`](reference/human-approval-model.md)
 - [`reference/ai-governance.md`](reference/ai-governance.md)
+
+## Future agent packs
+
+For planned OpenCode agent-pack design, including Gentle integration and standalone SDO-Orchestrator modes, see [`agent-pack/opencode-agent-pack-design.md`](agent-pack/opencode-agent-pack-design.md).

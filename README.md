@@ -57,6 +57,7 @@ Read [`docs/start-here.md`](docs/start-here.md).
 | Guides | [`docs/guides/operator-guide.md`](docs/guides/operator-guide.md), [`docs/guides/platform-tooling-guide.md`](docs/guides/platform-tooling-guide.md), [`docs/guides/adoption-guide.md`](docs/guides/adoption-guide.md) |
 | Guarantees | [`docs/reference/evidence-and-auditability.md`](docs/reference/evidence-and-auditability.md), [`docs/reference/rollback-and-reversibility.md`](docs/reference/rollback-and-reversibility.md) |
 | AI and agentic operations | [`docs/reference/ai-governance.md`](docs/reference/ai-governance.md), [`docs/reference/agent-roles.md`](docs/reference/agent-roles.md), [`docs/reference/autonomy-levels.md`](docs/reference/autonomy-levels.md), [`docs/reference/tool-execution-policy.md`](docs/reference/tool-execution-policy.md), [`docs/reference/human-approval-model.md`](docs/reference/human-approval-model.md) |
+| Future agent packs | [`docs/agent-pack/opencode-agent-pack-design.md`](docs/agent-pack/opencode-agent-pack-design.md) |
 | Templates | [`docs/templates/`](docs/templates/) |
 
 ## Optional integrations
