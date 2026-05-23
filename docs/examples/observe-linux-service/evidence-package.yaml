@@ -1,0 +1,79 @@
+sdo_evidence_package:
+  schema_version: "1.0"
+  sdo_id: "SDO-20260523-001"
+  package_id: "EVP-SDO-20260523-001"
+  operation:
+    title: "Observe Linux service health"
+    profile: "SDO-Lightweight"
+    base_class: "Observe"
+    environment: "staging"
+  traceability:
+    operational_spec_ref:
+      uri: "operational-spec.md"
+      version: "0.1.0"
+      sha256: "<fill>"
+    execution_plan_ref:
+      uri: "runbook.md"
+      sha256: "<fill>"
+    approval_record_ref:
+      uri: "N/A"
+      decision: "not_required"
+    validation_report_ref:
+      uri: "validation-report.md"
+      sha256: "<fill>"
+  actors:
+    requester: "platform-team"
+    approvers: []
+    operators:
+      - "<operator>"
+    validators:
+      - "<operator>"
+    evidence_collector: "<operator>"
+  timeline:
+    created_at_utc: "2026-05-23T00:00:00Z"
+    approved_at_utc: "N/A"
+    execution_started_at_utc: "<fill>"
+    execution_finished_at_utc: "<fill>"
+    validation_finished_at_utc: "<fill>"
+    closed_at_utc: "<fill>"
+  evidence_index:
+    - evidence_item_id: "EVI-001"
+      type: "technical_execution"
+      planned_action_id: "PA-001"
+      executed_action_id: "EA-001"
+      sensitivity: "internal"
+      sha256: "<fill>"
+      source_ref: "command://hostnamectl-static"
+    - evidence_item_id: "EVI-002"
+      type: "validation"
+      planned_action_id: "PA-002"
+      executed_action_id: "EA-002"
+      sensitivity: "internal"
+      sha256: "<fill>"
+      source_ref: "command://systemctl-is-active-nginx"
+    - evidence_item_id: "EVI-003"
+      type: "technical_execution"
+      planned_action_id: "PA-003"
+      executed_action_id: "EA-003"
+      sensitivity: "confidential"
+      sha256: "<fill>"
+      source_ref: "journal://staging-web-01/nginx?last=100&redacted=true"
+  integrity:
+    package_manifest_sha256: "<fill>"
+    signed_by: ""
+    signature_ref: ""
+    immutable_storage_ref: ""
+  retention:
+    policy: "SDO-Lightweight-30d"
+    retain_until_utc: "<fill>"
+    legal_hold: false
+    owner: "ops-team"
+  access_control:
+    classification: "internal"
+    allowed_roles:
+      - "ops-team"
+      - "platform-team"
+  closure:
+    evidence_closure_gate: "pending"
+    closed_by: ""
+    closure_notes: ""

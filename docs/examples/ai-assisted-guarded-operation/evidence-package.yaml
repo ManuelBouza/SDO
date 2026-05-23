@@ -1,0 +1,137 @@
+sdo_evidence_package:
+  schema_version: "1.0"
+  sdo_id: "SDO-20260523-003"
+  package_id: "EVP-SDO-20260523-003"
+  operation:
+    title: "AI-assisted production diagnostic"
+    profile: "SDO-Normal"
+    base_class: "Observe"
+    environment: "production"
+    agentic_mode: "guarded-agent"
+    autonomy_level: "A4"
+  traceability:
+    operational_spec_ref:
+      uri: "operational-spec.md"
+      version: "0.1.0"
+      sha256: "sha256:<fill>"
+    execution_plan_ref:
+      uri: "runbook.md"
+      sha256: "sha256:<fill>"
+    approval_record_ref:
+      uri: "APR-SDO-20260523-003"
+      decision: "approved"
+    validation_report_ref:
+      uri: "validation-report.md"
+      sha256: "sha256:<fill>"
+  actors:
+    requester: "service-owner"
+    approvers:
+      - "service-owner"
+    operators: []
+    validators:
+      - "platform-verifier"
+    agents:
+      - "guarded-agent-runtime"
+    evidence_collector: "platform-team"
+  timeline:
+    created_at_utc: "2026-05-23T00:00:00Z"
+    approved_at_utc: "<approval-utc>"
+    execution_started_at_utc: "<execution-start-utc>"
+    execution_finished_at_utc: "<execution-finish-utc>"
+    validation_finished_at_utc: "<validation-utc>"
+    closed_at_utc: ""
+  evidence_index:
+    - evidence_item_id: "EVI-001"
+      type: "approval"
+      planned_action_id: "approval-gate"
+      executed_action_id: "APR-SDO-20260523-003"
+      actor:
+        type: "human"
+        identity_ref: "service-owner"
+      tool:
+        name: "approval-system"
+        action_id: "APR-SDO-20260523-003"
+        policy_ref: "docs/reference/human-approval-model.md"
+        approval_ref: "APR-SDO-20260523-003"
+      sensitivity: "internal"
+      sha256: "sha256:<fill>"
+      source_ref: "approval-record"
+    - evidence_item_id: "EVI-002"
+      type: "technical_execution"
+      planned_action_id: "PA-001"
+      executed_action_id: "TOOL-001"
+      actor:
+        type: "agent"
+        identity_ref: "guarded-agent-runtime"
+      tool:
+        name: "https.get"
+        action_id: "TOOL-001"
+        policy_ref: "docs/reference/tool-execution-policy.md"
+        approval_ref: "APR-SDO-20260523-003"
+      sensitivity: "internal"
+      sha256: "sha256:<fill>"
+      source_ref: "health-output-ref"
+    - evidence_item_id: "EVI-003"
+      type: "technical_execution"
+      planned_action_id: "PA-002"
+      executed_action_id: "TOOL-002"
+      actor:
+        type: "agent"
+        identity_ref: "guarded-agent-runtime"
+      tool:
+        name: "monitoring.query"
+        action_id: "TOOL-002"
+        policy_ref: "docs/reference/tool-execution-policy.md"
+        approval_ref: "APR-SDO-20260523-003"
+      sensitivity: "internal"
+      sha256: "sha256:<fill>"
+      source_ref: "latency-metric-output-ref"
+    - evidence_item_id: "EVI-004"
+      type: "technical_execution"
+      planned_action_id: "PA-003"
+      executed_action_id: "TOOL-003"
+      actor:
+        type: "agent"
+        identity_ref: "guarded-agent-runtime"
+      tool:
+        name: "monitoring.query"
+        action_id: "TOOL-003"
+        policy_ref: "docs/reference/tool-execution-policy.md"
+        approval_ref: "APR-SDO-20260523-003"
+      sensitivity: "internal"
+      sha256: "sha256:<fill>"
+      source_ref: "error-rate-output-ref"
+    - evidence_item_id: "EVI-005"
+      type: "validation"
+      planned_action_id: "validation"
+      executed_action_id: "VAL-SDO-20260523-003"
+      actor:
+        type: "human"
+        identity_ref: "platform-verifier"
+      tool:
+        name: "manual-review"
+        action_id: "VAL-SDO-20260523-003"
+        policy_ref: "docs/reference/autonomy-levels.md"
+        approval_ref: "APR-SDO-20260523-003"
+      sensitivity: "internal"
+      sha256: "sha256:<fill>"
+      source_ref: "validation-report.md"
+  integrity:
+    package_manifest_sha256: "sha256:<fill>"
+    signed_by: ""
+    signature_ref: ""
+    immutable_storage_ref: ""
+  retention:
+    policy: "30 days"
+    retain_until_utc: "<retention-date>"
+    legal_hold: false
+    owner: "platform-team"
+  access_control:
+    classification: "internal"
+    allowed_roles:
+      - "platform-team"
+      - "service-owner"
+  closure:
+    evidence_closure_gate: "pending"
+    closed_by: ""
+    closure_notes: "Read-only diagnostic; rollback/recovery not applicable."

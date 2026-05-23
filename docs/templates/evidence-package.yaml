@@ -1,0 +1,72 @@
+sdo_evidence_package:
+  schema_version: "1.0"
+  sdo_id: "SDO-YYYYMMDD-0001"
+  package_id: "EVP-SDO-YYYYMMDD-0001"
+  operation:
+    title: ""
+    profile: "SDO-Normal"
+    base_class: "Configure"
+    environment: "prod"
+    agentic_mode: "manual | AI-assisted | guarded-agent | autonomous-policy"
+    autonomy_level: "A0"
+  traceability:
+    operational_spec_ref:
+      uri: ""
+      version: ""
+      sha256: ""
+    execution_plan_ref:
+      uri: ""
+      sha256: ""
+    approval_record_ref:
+      uri: ""
+      decision: "approved"
+    validation_report_ref:
+      uri: ""
+      sha256: ""
+  actors:
+    requester: ""
+    approvers: []
+    operators: []
+    validators: []
+    agents: []
+    evidence_collector: ""
+  timeline:
+    created_at_utc: ""
+    approved_at_utc: ""
+    execution_started_at_utc: ""
+    execution_finished_at_utc: ""
+    validation_finished_at_utc: ""
+    closed_at_utc: ""
+  evidence_index:
+    - evidence_item_id: "EVI-001"
+      type: "technical_execution"
+      planned_action_id: ""
+      executed_action_id: ""
+      actor:
+        type: "human | agent | pipeline | platform | service_account"
+        identity_ref: ""
+      tool:
+        name: ""
+        action_id: ""
+        policy_ref: ""
+        approval_ref: ""
+      sensitivity: "internal"
+      sha256: ""
+      source_ref: ""
+  integrity:
+    package_manifest_sha256: ""
+    signed_by: ""
+    signature_ref: ""
+    immutable_storage_ref: ""
+  retention:
+    policy: ""
+    retain_until_utc: ""
+    legal_hold: false
+    owner: ""
+  access_control:
+    classification: "internal"
+    allowed_roles: []
+  closure:
+    evidence_closure_gate: "pending"
+    closed_by: ""
+    closure_notes: ""

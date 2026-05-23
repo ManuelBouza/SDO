@@ -1,0 +1,22 @@
+# Local/generated agent metadata
+.atl/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+.cache/
+tmp/
+temp/
