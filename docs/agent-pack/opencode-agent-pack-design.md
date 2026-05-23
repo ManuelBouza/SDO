@@ -262,6 +262,8 @@ The pack should include a shared resolver or registry pattern inspired by Gentle
 
 The MVP should implement file-based storage first and treat Engram as an optional companion, not a required dependency.
 
+File-based artifact store conventions now exist under [`../../agent-pack/opencode/shared/`](../../agent-pack/opencode/shared/): `operation-layout.md` defines the default `sdo/operations/<SDO ID>/` structure, `manifest-template.yaml` provides the starter manifest for `/sdo-new`, and `artifact-state-machine.md` defines lifecycle transitions used by `/sdo-continue`.
+
 ## Preflight Checks
 
 Before an operation can execute, the orchestrator should confirm:
@@ -368,6 +370,9 @@ agent-pack/
     shared/
       phase-result-envelope.yaml
       artifact-contract.yaml
+      operation-layout.md
+      manifest-template.yaml
+      artifact-state-machine.md
       registry.yaml
       preflight-checklist.md
       dependency-gates.md
@@ -392,7 +397,7 @@ The first implementation can be file-copy based. A richer installer can come lat
 ## MVP Sequence
 
 1. Define shared protocol assets: phase result envelope, artifact contract, preflight checklist, and dependency gates. Initial MVP assets now live under [`../../agent-pack/opencode/shared/`](../../agent-pack/opencode/shared/).
-2. Create file-based artifact store conventions and manifest template.
+2. Define file-based artifact store conventions, a copyable starter manifest, and artifact lifecycle state machine.
 3. Implement standalone `sdo-orchestrator` and the minimal `/sdo-init`, `/sdo-new`, `/sdo-plan`, `/sdo-approval-check`, and `/sdo-continue` commands.
 4. Add read-only validation and evidence packaging commands before state-changing execution.
 5. Add `/sdo-execute` only after approval, autonomy, and tool policy gates are enforceable.

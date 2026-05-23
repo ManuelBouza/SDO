@@ -18,6 +18,8 @@ sdo_operation_manifest:
     requested_by: ""
     created_at_utc: ""
     updated_at_utc: ""
+    supersedes: []
+    superseded_by: ""
 
   lifecycle:
     # current_phase is the last phase that produced authoritative manifest state.
@@ -71,35 +73,54 @@ sdo_operation_manifest:
     operational_spec:
       uri: "sdo/operations/SDO-YYYYMMDD-NNN/operational-spec.md"
       status: "missing | draft | approved | superseded"
+      version: ""
       sha256: ""
     runbook:
       uri: "sdo/operations/SDO-YYYYMMDD-NNN/runbook.md"
       status: "missing | draft | approved | superseded"
+      version: ""
       sha256: ""
     approval_record:
       uri: "sdo/operations/SDO-YYYYMMDD-NNN/approval-record.yaml"
-      status: "missing | pending | approved | rejected | hold | emergency-approved | accepted-risk"
+      status: "missing | pending | approved | rejected | hold | emergency-approved | accepted-risk | superseded"
+      version: ""
       sha256: ""
     execution_record:
       uri: "sdo/operations/SDO-YYYYMMDD-NNN/execution-record.md"
-      status: "missing | pending | completed | failed | rolled-back"
+      status: "missing | pending | in-progress | completed | failed | rolled-back | superseded"
+      version: ""
       sha256: ""
     validation_report:
       uri: "sdo/operations/SDO-YYYYMMDD-NNN/validation-report.md"
-      status: "missing | pending | passed | failed | partial | inconclusive"
+      status: "missing | pending | passed | failed | partial | inconclusive | superseded"
+      version: ""
       sha256: ""
     evidence_package:
       uri: "sdo/operations/SDO-YYYYMMDD-NNN/evidence-package.yaml"
-      status: "missing | open | complete | incomplete | redaction-required | closed"
+      status: "missing | open | complete | incomplete | redaction-required | closed | superseded"
+      version: ""
       sha256: ""
     review_record:
       uri: "sdo/operations/SDO-YYYYMMDD-NNN/review-record.md"
-      status: "missing | draft | completed"
+      status: "missing | draft | completed | accepted-risk | superseded"
+      version: ""
       sha256: ""
     archive_record:
       uri: "sdo/operations/SDO-YYYYMMDD-NNN/archive-record.md"
       status: "missing | ready | archived"
+      version: ""
       sha256: ""
+
+  external_refs:
+    - external_ref_id: "EXT-001"
+      type: "ticket | pr | pipeline | itsm | monitoring | audit-log | storage | other"
+      system: ""
+      uri: ""
+      stable_id: ""
+      version: ""
+      status: ""
+      captured_at_utc: ""
+      summary: ""
 
   approval_refs:
     - approval_id: "APR-001"

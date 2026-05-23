@@ -13,6 +13,9 @@ Files remain the source of truth for the MVP. Optional Engram or hybrid indexing
 
 - [`opencode/shared/phase-result-envelope.yaml`](opencode/shared/phase-result-envelope.yaml) defines the compact handoff contract returned by phase agents, skills, and commands.
 - [`opencode/shared/artifact-contract.yaml`](opencode/shared/artifact-contract.yaml) defines the file-based operation manifest and artifact graph.
+- [`opencode/shared/operation-layout.md`](opencode/shared/operation-layout.md) defines the default operation directory layout, SDO ID naming, source-of-truth rules, safe updates, external references, and evidence handling.
+- [`opencode/shared/manifest-template.yaml`](opencode/shared/manifest-template.yaml) provides the starter manifest that `/sdo-new` can copy for a draft operation.
+- [`opencode/shared/artifact-state-machine.md`](opencode/shared/artifact-state-machine.md) defines lifecycle and artifact status transitions for routing, continuation, failure, supersession, and archive.
 - [`opencode/shared/preflight-checklist.md`](opencode/shared/preflight-checklist.md) defines checks the orchestrator must run before phases and execution.
 - [`opencode/shared/dependency-gates.md`](opencode/shared/dependency-gates.md) defines phase prerequisites, blocked conditions, and autonomy distinctions.
 

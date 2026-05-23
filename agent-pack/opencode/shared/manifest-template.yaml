@@ -1,0 +1,137 @@
+sdo_operation_manifest:
+  schema_version: "0.1"
+  operation:
+    sdo_id: "SDO-YYYYMMDD-NNN"
+    title: "Draft operation title"
+    description: "Draft operation description"
+    owner: ""
+    requested_by: ""
+    created_at_utc: "YYYY-MM-DDTHH:MM:SSZ"
+    updated_at_utc: "YYYY-MM-DDTHH:MM:SSZ"
+    supersedes: []
+    superseded_by: ""
+
+  lifecycle:
+    current_phase: "new"
+    status: "draft"
+    next_allowed_phases:
+      - "plan"
+    stop_reason: ""
+    last_phase_result_ref: ""
+
+  profile:
+    flow_profile: "SDO-Normal"
+    base_class: "Other"
+    risk_tier: "medium"
+    overlays: []
+    reversibility_level: "R0"
+
+  autonomy:
+    agentic_mode: "AI-assisted"
+    requested_level: "A1"
+    approved_level: "A0"
+    approved_ceiling: "A0"
+    a6_policy_ref: ""
+
+  target:
+    environment: "other"
+    scope_summary: ""
+    included_targets: []
+    excluded_targets: []
+    execution_window_utc:
+      from: ""
+      to: ""
+
+  actors:
+    requester:
+      identity_ref: ""
+      role: "requester"
+    owner:
+      identity_ref: ""
+      role: "owner"
+    human_approvers: []
+    agents: []
+    executor:
+      type: "human"
+      identity_ref: ""
+      privilege_boundary_ref: ""
+    validator:
+      type: "human"
+      identity_ref: ""
+
+  artifact_refs:
+    operational_spec:
+      uri: "sdo/operations/SDO-YYYYMMDD-NNN/operational-spec.md"
+      status: "draft"
+      version: "0.1"
+      sha256: ""
+    runbook:
+      uri: "sdo/operations/SDO-YYYYMMDD-NNN/runbook.md"
+      status: "missing"
+      version: ""
+      sha256: ""
+    approval_record:
+      uri: "sdo/operations/SDO-YYYYMMDD-NNN/approval-record.yaml"
+      status: "missing"
+      version: ""
+      sha256: ""
+    execution_record:
+      uri: "sdo/operations/SDO-YYYYMMDD-NNN/execution-record.md"
+      status: "missing"
+      version: ""
+      sha256: ""
+    validation_report:
+      uri: "sdo/operations/SDO-YYYYMMDD-NNN/validation-report.md"
+      status: "missing"
+      version: ""
+      sha256: ""
+    evidence_package:
+      uri: "sdo/operations/SDO-YYYYMMDD-NNN/evidence-package.yaml"
+      status: "open"
+      version: "0.1"
+      sha256: ""
+    review_record:
+      uri: "sdo/operations/SDO-YYYYMMDD-NNN/review-record.md"
+      status: "missing"
+      version: ""
+      sha256: ""
+    archive_record:
+      uri: "sdo/operations/SDO-YYYYMMDD-NNN/archive-record.md"
+      status: "missing"
+      version: ""
+      sha256: ""
+
+  external_refs: []
+
+  approval_refs: []
+
+  policy_refs:
+    tool_execution_policy_ref: ""
+    autonomy_policy_ref: ""
+    evidence_policy_ref: ""
+    retention_policy_ref: ""
+    a6_preapproved_policy_ref: ""
+
+  evidence_refs: []
+
+  dependency_state:
+    operation_identity_confirmed: true
+    spec_ready: false
+    runbook_ready: false
+    approval_ready: false
+    policy_ready: false
+    rollback_or_recovery_ready: false
+    execution_record_ready: false
+    validation_ready: false
+    evidence_ready: false
+    review_ready: false
+
+  deviations: []
+  blockers: []
+
+  archive:
+    status: "not-ready"
+    immutable_storage_ref: ""
+    final_manifest_sha256: ""
+    archived_at_utc: ""
+    archived_by: ""
