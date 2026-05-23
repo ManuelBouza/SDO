@@ -45,6 +45,12 @@ Installers should copy one command set into the target OpenCode command location
 
 See [`opencode/commands/README.md`](opencode/commands/README.md) for command packaging rules.
 
+## Standalone Agent Assets
+
+The standalone `sdo-orchestrator` OpenCode agent asset now exists under [`opencode/standalone/agents/`](opencode/standalone/agents/).
+
+It is a coordinator, not an executor. The current MVP supports command-routed `/sdo-init` and `/sdo-new` only, with routing, preflight checks, dependency gates, safe artifact preparation, and phase result envelopes. Phase agents and `/sdo-execute` are intentionally not included yet.
+
 ## Skill Assets
 
 Initial reusable OpenCode skills now exist under [`opencode/skills/`](opencode/skills/):

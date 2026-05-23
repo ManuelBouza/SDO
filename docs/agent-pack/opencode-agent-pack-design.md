@@ -80,12 +80,12 @@ The SDO pack should install:
 
 - `sdo-orchestrator` as the root OpenCode agent;
 - `/sdo-*` commands routed directly to `sdo-orchestrator`;
-- SDO phase agents;
+- SDO phase agents when they exist;
 - SDO skills and shared protocol files;
 - local artifact storage defaults;
 - optional Engram or hybrid storage configuration.
 
-In this mode, SDO-Orchestrator owns lifecycle state, dependency gates, preflight checks, command routing, phase result interpretation, and archive readiness.
+In this mode, SDO-Orchestrator owns lifecycle state, dependency gates, preflight checks, command routing, phase result interpretation, and archive readiness. The current MVP standalone asset exists for `/sdo-init` and `/sdo-new` only; phase agents and execution support are not implemented yet.
 
 ## Shared SDO Protocol
 
@@ -203,29 +203,29 @@ Store:
 
 Do not store secrets, unnecessary personal data, raw `.env` values, or full transcripts unless explicitly approved and redacted.
 
-## Proposed Commands
+## Command Assets And Roadmap
 
 Commands are user-facing OpenCode entry points. They should collect intent, resolve the target `SDO ID`, call the active orchestrator, and return the phase result envelope.
 
-Initial command assets for `/sdo-init` and `/sdo-new` now exist under runtime-specific directories. Gentle integration commands route to `gentle-orchestrator`; standalone commands route to `sdo-orchestrator`. The command bodies remain thin wrappers and defer phase work to the active orchestrator.
+Initial command assets for `/sdo-init` and `/sdo-new` now exist under runtime-specific directories. Gentle integration commands route to `gentle-orchestrator`; standalone commands route to `sdo-orchestrator`. The command bodies remain thin wrappers and defer phase coordination to the active orchestrator.
 
-| Command | Purpose | Primary output |
-|---|---|---|
-| `/sdo-init` | Initialize SDO agent-pack assets, storage mode, and local configuration. | Pack config and preflight report. |
-| `/sdo-new` | Create a new operation from intent and assign or confirm an `SDO ID`. | Manifest and draft spec. |
-| `/sdo-plan` | Classify the operation and produce or update spec/runbook artifacts. | Operational Spec and runbook. |
-| `/sdo-approval-check` | Verify approval requirements, autonomy level, tool policy, and blockers. | Approval gate result. |
-| `/sdo-execute` | Run or guide approved bounded execution. | Execution record and evidence references. |
-| `/sdo-validate` | Validate observed state against the validation contract. | Validation report. |
-| `/sdo-review` | Produce post-operation review and learning notes. | Review record. |
-| `/sdo-archive` | Finalize immutable references and close the operation. | Archive record. |
-| `/sdo-continue` | Resume the next eligible phase from manifest state. | Phase result envelope. |
+| Command | Status | Purpose | Primary output |
+|---|---|---|---|
+| `/sdo-init` | MVP asset exists | Initialize SDO agent-pack assets, storage mode, and local configuration. | Pack config and preflight report. |
+| `/sdo-new` | MVP asset exists | Create a new operation from intent and assign or confirm an `SDO ID`. | Manifest and draft spec. |
+| `/sdo-plan` | Future non-execution command | Classify the operation and produce or update spec/runbook artifacts. | Operational Spec and runbook. |
+| `/sdo-approval-check` | Future non-execution command | Verify approval requirements, autonomy level, tool policy, and blockers. | Approval gate result. |
+| `/sdo-execute` | Future only; not supported yet | Run or guide approved bounded execution after approval, autonomy, and tool policy gates are enforceable. | Execution record and evidence references. |
+| `/sdo-validate` | Future command | Validate observed state against the validation contract. | Validation report. |
+| `/sdo-review` | Future command | Produce post-operation review and learning notes. | Review record. |
+| `/sdo-archive` | Future command | Finalize immutable references and close the operation. | Archive record. |
+| `/sdo-continue` | Future command | Resume the next eligible phase from manifest state. | Phase result envelope. |
 
 ## Proposed Agents and Subagents
 
 | Agent | Responsibility | Notes |
 |---|---|---|
-| `sdo-orchestrator` | Route commands, enforce dependencies, run preflight, interpret phase results. | Installed only in standalone mode. |
+| `sdo-orchestrator` | Route commands, enforce dependencies, run preflight, interpret phase results. | Standalone asset now exists for `/sdo-init` and `/sdo-new`; it is a coordinator, not an executor. |
 | `sdo-init` | Inspect OpenCode environment, install assets, verify storage and policy settings. | Shared by both modes. |
 | `sdo-classify` | Classify operation type, risk, profile, autonomy ceiling, and required gates. | Should not execute tools beyond read-only context gathering. |
 | `sdo-spec` | Draft or refine the Operational Spec as an agent contract. | Must surface missing invariants instead of guessing. |
@@ -325,13 +325,13 @@ The adapter should make SDO feel native inside Gentle while keeping the conceptu
 Installation in standalone mode should:
 
 1. Install `sdo-orchestrator` as the root agent for SDO commands.
-2. Install SDO phase agents and skills.
+2. Install SDO skills and, later, SDO phase agents when those assets exist.
 3. Configure the selected artifact store.
 4. Generate or refresh the SDO skill registry.
 5. Run preflight to confirm commands can resolve the orchestrator and artifact path.
 6. Leave Gentle and SDD configuration untouched if present.
 
-The standalone runtime should be minimal. It should route commands, enforce gates, and delegate phase work rather than becoming a large framework.
+The standalone runtime should be minimal. It should route commands, enforce gates, and delegate phase work when phase agents exist rather than becoming a large framework. The current MVP supports only `/sdo-init` and `/sdo-new`; it does not include `/sdo-execute` or execution agents.
 
 ## Initial `agent-pack/` Asset Layout
 
@@ -350,11 +350,13 @@ agent-pack/
         sdo-init.md
         sdo-new.md
     standalone/
+      agents/
+        README.md
+        sdo-orchestrator.md
       commands/
         sdo-init.md
         sdo-new.md
     agents/
-      sdo-orchestrator.md
       sdo-init.md
       sdo-classify.md
       sdo-spec.md
@@ -429,7 +431,7 @@ The likely future shape is:
 2. Define file-based artifact store conventions, a copyable starter manifest, and artifact lifecycle state machine.
 3. Add initial thin `/sdo-init` and `/sdo-new` command assets split by runtime mode.
 4. Add initial reusable OpenCode skills for shared protocol, artifact store, and spec authoring.
-5. Implement standalone `sdo-orchestrator` and the minimal `/sdo-plan`, `/sdo-approval-check`, and `/sdo-continue` commands.
+5. Add minimal `/sdo-plan`, `/sdo-approval-check`, and `/sdo-continue` commands and any required non-execution phase agents.
 6. Add read-only validation and evidence packaging commands before state-changing execution.
 7. Add `/sdo-execute` only after approval, autonomy, and tool policy gates are enforceable.
 8. Add Gentle integration adapter registration for the remaining `/sdo-*` commands, skills, and phase agents.
