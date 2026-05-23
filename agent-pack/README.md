@@ -2,7 +2,7 @@
 
 This directory contains experimental MVP assets for running SDO workflows in OpenCode.
 
-The first assets define shared protocol contracts before commands, agents, or installers are added. They are intended to work in both runtime modes described by the design:
+The first assets define shared protocol contracts and initial command wrappers. They are intended to work in both runtime modes described by the design:
 
 - Gentle integration mode, where SDO assets plug into an existing Gentle-Orchestrator runtime.
 - Standalone SDO-Orchestrator mode, where SDO owns phase routing, preflight checks, and dependency gates.
@@ -18,6 +18,17 @@ Files remain the source of truth for the MVP. Optional Engram or hybrid indexing
 - [`opencode/shared/artifact-state-machine.md`](opencode/shared/artifact-state-machine.md) defines lifecycle and artifact status transitions for routing, continuation, failure, supersession, and archive.
 - [`opencode/shared/preflight-checklist.md`](opencode/shared/preflight-checklist.md) defines checks the orchestrator must run before phases and execution.
 - [`opencode/shared/dependency-gates.md`](opencode/shared/dependency-gates.md) defines phase prerequisites, blocked conditions, and autonomy distinctions.
+
+## Command Assets
+
+Initial `/sdo-init` and `/sdo-new` OpenCode command assets now exist in runtime-specific directories:
+
+- [`opencode/gentle-integration/commands/`](opencode/gentle-integration/commands/) routes commands to `gentle-orchestrator`.
+- [`opencode/standalone/commands/`](opencode/standalone/commands/) routes commands to `sdo-orchestrator`.
+
+Installers should copy one command set into the target OpenCode command location. The commands are thin wrappers around orchestrator workflows; shared contracts under [`opencode/shared/`](opencode/shared/) remain authoritative. `/sdo-execute` is intentionally not included yet.
+
+See [`opencode/commands/README.md`](opencode/commands/README.md) for command packaging rules.
 
 ## Design Reference
 

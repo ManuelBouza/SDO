@@ -201,6 +201,8 @@ Do not store secrets, unnecessary personal data, raw `.env` values, or full tran
 
 Commands are user-facing OpenCode entry points. They should collect intent, resolve the target `SDO ID`, call the active orchestrator, and return the phase result envelope.
 
+Initial command assets for `/sdo-init` and `/sdo-new` now exist under runtime-specific directories. Gentle integration commands route to `gentle-orchestrator`; standalone commands route to `sdo-orchestrator`. The command bodies remain thin wrappers and defer phase work to the active orchestrator.
+
 | Command | Purpose | Primary output |
 |---|---|---|
 | `/sdo-init` | Initialize SDO agent-pack assets, storage mode, and local configuration. | Pack config and preflight report. |
@@ -322,22 +324,22 @@ The standalone runtime should be minimal. It should route commands, enforce gate
 
 ## Initial `agent-pack/` Asset Layout
 
-Future implementation assets can start with this layout:
+The current and planned implementation assets use this layout:
 
 ```text
 agent-pack/
   README.md
   opencode/
     commands/
-      sdo-init.md
-      sdo-new.md
-      sdo-plan.md
-      sdo-approval-check.md
-      sdo-execute.md
-      sdo-validate.md
-      sdo-review.md
-      sdo-archive.md
-      sdo-continue.md
+      README.md
+    gentle-integration/
+      commands/
+        sdo-init.md
+        sdo-new.md
+    standalone/
+      commands/
+        sdo-init.md
+        sdo-new.md
     agents/
       sdo-orchestrator.md
       sdo-init.md
@@ -398,12 +400,13 @@ The first implementation can be file-copy based. A richer installer can come lat
 
 1. Define shared protocol assets: phase result envelope, artifact contract, preflight checklist, and dependency gates. Initial MVP assets now live under [`../../agent-pack/opencode/shared/`](../../agent-pack/opencode/shared/).
 2. Define file-based artifact store conventions, a copyable starter manifest, and artifact lifecycle state machine.
-3. Implement standalone `sdo-orchestrator` and the minimal `/sdo-init`, `/sdo-new`, `/sdo-plan`, `/sdo-approval-check`, and `/sdo-continue` commands.
-4. Add read-only validation and evidence packaging commands before state-changing execution.
-5. Add `/sdo-execute` only after approval, autonomy, and tool policy gates are enforceable.
-6. Add Gentle integration adapter registration for `/sdo-*` commands, skills, and phase agents.
-7. Add `/sdo-review` and `/sdo-archive` closure behavior.
-8. Add optional Engram or hybrid indexing after file-based artifacts are stable.
+3. Add initial thin `/sdo-init` and `/sdo-new` command assets split by runtime mode.
+4. Implement standalone `sdo-orchestrator` and the minimal `/sdo-plan`, `/sdo-approval-check`, and `/sdo-continue` commands.
+5. Add read-only validation and evidence packaging commands before state-changing execution.
+6. Add `/sdo-execute` only after approval, autonomy, and tool policy gates are enforceable.
+7. Add Gentle integration adapter registration for the remaining `/sdo-*` commands, skills, and phase agents.
+8. Add `/sdo-review` and `/sdo-archive` closure behavior.
+9. Add optional Engram or hybrid indexing after file-based artifacts are stable.
 
 ## Related References
 

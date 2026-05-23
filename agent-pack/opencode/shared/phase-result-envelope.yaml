@@ -16,7 +16,7 @@ phase_result:
   runtime:
     mode: "gentle-integration | standalone"
     orchestrator: "gentle-orchestrator | sdo-orchestrator | human"
-    command: "/sdo-new | /sdo-plan | /sdo-approval-check | /sdo-execute | /sdo-validate | /sdo-review | /sdo-archive | /sdo-continue"
+    command: "/sdo-init | /sdo-new | /sdo-plan | /sdo-approval-check | /sdo-execute | /sdo-validate | /sdo-review | /sdo-archive | /sdo-continue"
     agent: "sdo-orchestrator | sdo-spec | sdo-runbook | sdo-approval | sdo-execute | sdo-validate | sdo-evidence | sdo-review | sdo-archive"
     agent_version: ""
     invocation_id: ""
