@@ -30,6 +30,16 @@ Installers should copy one command set into the target OpenCode command location
 
 See [`opencode/commands/README.md`](opencode/commands/README.md) for command packaging rules.
 
+## Skill Assets
+
+Initial reusable OpenCode skills now exist under [`opencode/skills/`](opencode/skills/):
+
+- [`sdo-shared-protocol`](opencode/skills/sdo-shared-protocol/SKILL.md) for phase coordination, gates, and envelope-compatible results.
+- [`sdo-artifact-store`](opencode/skills/sdo-artifact-store/SKILL.md) for file-based operation state, manifests, artifact refs, and evidence refs.
+- [`sdo-spec-authoring`](opencode/skills/sdo-spec-authoring/SKILL.md) for Operational Spec drafting as an agentic contract.
+
+See [`opencode/skills/README.md`](opencode/skills/README.md) for skill packaging rules.
+
 ## Design Reference
 
 - [`../docs/agent-pack/opencode-agent-pack-design.md`](../docs/agent-pack/opencode-agent-pack-design.md)

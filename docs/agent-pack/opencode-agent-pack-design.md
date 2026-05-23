@@ -235,9 +235,12 @@ Initial command assets for `/sdo-init` and `/sdo-new` now exist under runtime-sp
 
 SDO skills should follow OpenCode/Gentle-style skill directories with `SKILL.md` as the entry point.
 
+Initial skill assets now exist under [`../../agent-pack/opencode/skills/`](../../agent-pack/opencode/skills/). They define shared instructions for protocol gates, file-based artifact state, and Operational Spec authoring so future commands, orchestrators, and phase agents can reference common contracts instead of duplicating logic.
+
 Initial skill categories:
 
-- `sdo-shared-protocol` for lifecycle, gates, envelope, artifact contracts, and terminology;
+- `sdo-shared-protocol` for lifecycle, gates, phase result envelopes, and fail-closed protocol behavior;
+- `sdo-artifact-store` for operation directories, manifests, artifact references, evidence references, and safe file-based updates;
 - `sdo-spec-authoring` for Operational Spec drafting rules;
 - `sdo-runbook-authoring` for plan, precheck, stop condition, and rollback patterns;
 - `sdo-approval-gates` for human approval and autonomy policy checks;
@@ -353,7 +356,10 @@ agent-pack/
       sdo-review.md
       sdo-archive.md
     skills/
+      README.md
       sdo-shared-protocol/
+        SKILL.md
+      sdo-artifact-store/
         SKILL.md
       sdo-spec-authoring/
         SKILL.md
@@ -401,12 +407,13 @@ The first implementation can be file-copy based. A richer installer can come lat
 1. Define shared protocol assets: phase result envelope, artifact contract, preflight checklist, and dependency gates. Initial MVP assets now live under [`../../agent-pack/opencode/shared/`](../../agent-pack/opencode/shared/).
 2. Define file-based artifact store conventions, a copyable starter manifest, and artifact lifecycle state machine.
 3. Add initial thin `/sdo-init` and `/sdo-new` command assets split by runtime mode.
-4. Implement standalone `sdo-orchestrator` and the minimal `/sdo-plan`, `/sdo-approval-check`, and `/sdo-continue` commands.
-5. Add read-only validation and evidence packaging commands before state-changing execution.
-6. Add `/sdo-execute` only after approval, autonomy, and tool policy gates are enforceable.
-7. Add Gentle integration adapter registration for the remaining `/sdo-*` commands, skills, and phase agents.
-8. Add `/sdo-review` and `/sdo-archive` closure behavior.
-9. Add optional Engram or hybrid indexing after file-based artifacts are stable.
+4. Add initial reusable OpenCode skills for shared protocol, artifact store, and spec authoring.
+5. Implement standalone `sdo-orchestrator` and the minimal `/sdo-plan`, `/sdo-approval-check`, and `/sdo-continue` commands.
+6. Add read-only validation and evidence packaging commands before state-changing execution.
+7. Add `/sdo-execute` only after approval, autonomy, and tool policy gates are enforceable.
+8. Add Gentle integration adapter registration for the remaining `/sdo-*` commands, skills, and phase agents.
+9. Add `/sdo-review` and `/sdo-archive` closure behavior.
+10. Add optional Engram or hybrid indexing after file-based artifacts are stable.
 
 ## Related References
 
