@@ -15,6 +15,8 @@ The design optimizes for:
 - dependency gates that prevent unsafe phase skipping;
 - local-first documentation and artifact storage.
 
+This document describes the current OpenCode MVP adapter. It does not define a universal SDO agent-pack layout, and it does not imply current support for Codex, Claude Code, or other agent runtimes.
+
 ## Non-goals
 
 The MVP should not copy Gentle AI's full installer or TUI complexity.
@@ -34,6 +36,8 @@ Out of scope for the first implementation:
 | Principle | Decision |
 |---|---|
 | SDO protocol is shared core | Commands, agents, skills, and storage modes must implement the same SDO lifecycle and artifact contracts. |
+| Shared content stays adapter-neutral | Shared SDO protocol, methodology, and skill content must avoid OpenCode-only assumptions unless the file is explicitly part of OpenCode packaging. |
+| OpenCode packaging is the MVP adapter | Assets under `agent-pack/opencode/` are the current OpenCode implementation target, not the final cross-agent layout. |
 | Gentle integration is an adapter | When Gentle-Orchestrator is present and desired, SDO adds commands, skills, and subagents that route through Gentle without redefining its runtime. |
 | SDO-Orchestrator is native runtime | When Gentle is absent or not desired, SDO installs an independent orchestrator that owns SDO phase routing and gates. |
 | Commands stay thin | Slash commands collect intent and call the orchestrator or phase agent; they should not duplicate lifecycle logic. |
@@ -41,6 +45,8 @@ Out of scope for the first implementation:
 | Gates fail closed | Missing spec, approval, policy, evidence, or dependency state should stop progress, not be inferred. |
 | Evidence is referenced, not dumped | Store evidence indexes, hashes, source references, and summaries; avoid raw logs unless needed and redacted. |
 | Manual compatibility remains mandatory | Every artifact should remain understandable and executable by humans without OpenCode. |
+
+Gentle AI's separation of shared assets from per-agent packaging is an architectural inspiration for this boundary. It is not a runtime dependency for SDO.
 
 ## Runtime Modes
 
@@ -237,6 +243,8 @@ SDO skills should follow OpenCode/Gentle-style skill directories with `SKILL.md`
 
 Initial skill assets now exist under [`../../agent-pack/opencode/skills/`](../../agent-pack/opencode/skills/). They define shared instructions for protocol gates, file-based artifact state, and Operational Spec authoring so future commands, orchestrators, and phase agents can reference common contracts instead of duplicating logic.
 
+Although these skills are packaged for OpenCode today, their protocol and methodology guidance should remain portable in content. OpenCode-specific frontmatter, trigger wording, or installation paths belong at the adapter boundary.
+
 Initial skill categories:
 
 - `sdo-shared-protocol` for lifecycle, gates, phase result envelopes, and fail-closed protocol behavior;
@@ -329,6 +337,8 @@ The standalone runtime should be minimal. It should route commands, enforce gate
 
 The current and planned implementation assets use this layout:
 
+This is the OpenCode MVP layout. It keeps shared SDO assets under `opencode/shared/` for now because no other adapter exists yet. Do not treat that path as the permanent portability boundary.
+
 ```text
 agent-pack/
   README.md
@@ -389,6 +399,17 @@ agent-pack/
 ```
 
 The first implementation can be file-copy based. A richer installer can come later only if repeated local installation proves painful.
+
+### Future Multi-Agent Adapters
+
+SDO should be able to expose the same protocol and methodology through multiple agent runtimes over time. Future adapters may include Codex and Claude Code, but no such support exists yet.
+
+The likely future shape is:
+
+- shared portable SDO protocol, methodology, skill content, and artifact contracts;
+- one adapter package per runtime, such as OpenCode, Codex, or Claude Code;
+- adapter-specific command syntax, metadata, installers, and discovery rules;
+- tests or checks that prevent shared content from depending on one runtime's conventions.
 
 ## Risks and Tradeoffs
 

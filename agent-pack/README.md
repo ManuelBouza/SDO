@@ -9,6 +9,21 @@ The first assets define shared protocol contracts and initial command wrappers. 
 
 Files remain the source of truth for the MVP. Optional Engram or hybrid indexing may help agents resume context, but audit and routing decisions must be based on operation artifacts under `sdo/operations/<SDO ID>/`.
 
+## Portability Boundary
+
+The current implementation target is OpenCode only.
+
+SDO's protocol, lifecycle, artifact contracts, gates, and methodology are portable by design. The [`opencode/`](opencode/) directory is the OpenCode adapter and MVP packaging area, not the universal SDO agent-pack layout.
+
+Future adapters may package the same SDO protocol for other agent runtimes such as Codex or Claude Code. A likely future layout will separate shared portable SDO assets from adapter-specific packaging, for example:
+
+- shared portable protocol, skill, and artifact assets;
+- OpenCode-specific command, skill, and agent packaging;
+- future Codex-specific packaging;
+- future Claude Code-specific packaging.
+
+No Codex or Claude Code adapter exists yet.
+
 ## Shared Assets
 
 - [`opencode/shared/phase-result-envelope.yaml`](opencode/shared/phase-result-envelope.yaml) defines the compact handoff contract returned by phase agents, skills, and commands.
