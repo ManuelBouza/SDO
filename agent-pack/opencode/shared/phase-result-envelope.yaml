@@ -1,0 +1,95 @@
+# SDO phase result envelope template.
+#
+# Purpose: compact, machine-readable handoff from a command, skill, phase agent,
+# Gentle adapter, or standalone SDO-Orchestrator step.
+# Routing decisions should depend on this envelope plus manifest state, not chat
+# history or unstructured agent output.
+
+phase_result:
+  schema_version: "0.1"
+
+  # Operation identity. Must match the operation manifest under
+  # sdo/operations/<SDO ID>/manifest.yaml when an operation exists.
+  sdo_id: "SDO-YYYYMMDD-NNN"
+
+  # Runtime metadata identifies who produced the result and in which mode.
+  runtime:
+    mode: "gentle-integration | standalone"
+    orchestrator: "gentle-orchestrator | sdo-orchestrator | human"
+    command: "/sdo-new | /sdo-plan | /sdo-approval-check | /sdo-execute | /sdo-validate | /sdo-review | /sdo-archive | /sdo-continue"
+    agent: "sdo-orchestrator | sdo-spec | sdo-runbook | sdo-approval | sdo-execute | sdo-validate | sdo-evidence | sdo-review | sdo-archive"
+    agent_version: ""
+    invocation_id: ""
+
+  # Phase that produced this result. Keep values stable for gate checks.
+  phase: "init | new | plan | approval-check | execute | validate | review | archive | continue"
+
+  # success: phase completed and next_allowed_phases may be considered.
+  # blocked: required artifact, state, policy, dependency, or boundary is missing.
+  # needs-human: human decision, approval, risk acceptance, or clarification is required.
+  # failed: phase attempted work and failed; see stop_reason and evidence_refs.
+  status: "success | blocked | needs-human | failed"
+
+  summary: ""
+
+  # Core artifact outputs. Use paths relative to the repository or stable external refs.
+  artifacts_created: []
+  artifacts_updated: []
+  evidence_refs: []
+
+  # Approval and policy decisions emitted or required by this phase.
+  approvals_required:
+    - approval_id: ""
+      reason: ""
+      required_before_phase: "execute | validate | archive"
+      approval_record_ref: ""
+  policy_decisions:
+    - policy_ref: ""
+      decision: "allowed | denied | needs-approval | not-applicable"
+      reason: ""
+
+  # Deviations are differences from approved scope, plan, policy, evidence,
+  # validation, or execution behavior. Do not hide them in prose only.
+  deviations:
+    - deviation_id: "DEV-001"
+      severity: "low | medium | high | critical"
+      description: ""
+      disposition: "open | accepted-risk | corrected | follow-up-required"
+      evidence_ref: ""
+
+  # Autonomy and policy context used to produce this result.
+  autonomy:
+    level: "A0 | A1 | A2 | A3 | A4 | A5 | A6"
+    agentic_mode: "manual | AI-assisted | guarded-agent | autonomous-policy"
+    approved_ceiling: "A0 | A1 | A2 | A3 | A4 | A5 | A6"
+    execution_allowed: false
+    approval_boundary_ref: ""
+    tool_policy_ref: ""
+
+  # Risk and operation profile as understood at the end of this phase.
+  risk_profile:
+    profile: "SDO-Lightweight | SDO-Normal | SDO-Critical | SDO-Emergency | SDO-Pipeline-Backed"
+    base_class: "Observe | Configure | Deploy | Migrate | Repair | Decommission | Other"
+    risk_tier: "low | medium | high | critical"
+    environment: "dev | test | staging | prod | other"
+    sensitive_data_expected: false
+    rollback_or_recovery_required: false
+
+  # Validation summary is required even when validation has not run yet, so the
+  # orchestrator can distinguish "not applicable yet" from missing state.
+  validation:
+    contract_ref: ""
+    status: "not-run | passed | failed | partial | inconclusive | not-applicable"
+    summary: ""
+    evidence_refs: []
+
+  # Next phases permitted by this result. The orchestrator must also check the
+  # manifest and dependency gates before routing.
+  next_allowed_phases: []
+
+  # Human-readable reason for blocked, needs-human, or failed status.
+  stop_reason: ""
+
+  timestamps:
+    started_at_utc: ""
+    completed_at_utc: ""

@@ -1,0 +1,158 @@
+# SDO artifact contract template for file-based operation state.
+#
+# Default MVP location:
+#   sdo/operations/<SDO ID>/manifest.yaml
+#
+# Files are the source of truth for MVP routing, audit, and manual compatibility.
+# Engram or hybrid memory may index summaries, decisions, next actions, and
+# discoveries, but agents must not treat memory as authoritative operation state.
+
+sdo_operation_manifest:
+  schema_version: "0.1"
+
+  operation:
+    sdo_id: "SDO-YYYYMMDD-NNN"
+    title: ""
+    description: ""
+    owner: ""
+    requested_by: ""
+    created_at_utc: ""
+    updated_at_utc: ""
+
+  lifecycle:
+    # current_phase is the last phase that produced authoritative manifest state.
+    current_phase: "init | new | plan | approval-check | execute | validate | review | archive"
+    status: "draft | planned | approval-required | approved | executing | validating | reviewing | archived | blocked | failed | superseded"
+    next_allowed_phases: []
+    stop_reason: ""
+    last_phase_result_ref: ""
+
+  profile:
+    flow_profile: "SDO-Lightweight | SDO-Normal | SDO-Critical | SDO-Emergency | SDO-Pipeline-Backed"
+    base_class: "Observe | Configure | Deploy | Migrate | Repair | Decommission | Other"
+    risk_tier: "low | medium | high | critical"
+    overlays: []
+    reversibility_level: "R0 | R1 | R2 | R3 | R4 | R5 | R6 | R7"
+
+  autonomy:
+    agentic_mode: "manual | AI-assisted | guarded-agent | autonomous-policy"
+    requested_level: "A0 | A1 | A2 | A3 | A4 | A5 | A6"
+    approved_level: "A0 | A1 | A2 | A3 | A4 | A5 | A6"
+    approved_ceiling: "A0 | A1 | A2 | A3 | A4 | A5 | A6"
+    a6_policy_ref: ""
+
+  target:
+    environment: "dev | test | staging | prod | other"
+    scope_summary: ""
+    included_targets: []
+    excluded_targets: []
+    execution_window_utc:
+      from: ""
+      to: ""
+
+  actors:
+    requester:
+      identity_ref: ""
+      role: ""
+    owner:
+      identity_ref: ""
+      role: ""
+    human_approvers: []
+    agents: []
+    executor:
+      type: "human | agent | pipeline | platform | service_account"
+      identity_ref: ""
+      privilege_boundary_ref: ""
+    validator:
+      type: "human | agent | pipeline | platform | service_account"
+      identity_ref: ""
+
+  artifact_refs:
+    operational_spec:
+      uri: "sdo/operations/SDO-YYYYMMDD-NNN/operational-spec.md"
+      status: "missing | draft | approved | superseded"
+      sha256: ""
+    runbook:
+      uri: "sdo/operations/SDO-YYYYMMDD-NNN/runbook.md"
+      status: "missing | draft | approved | superseded"
+      sha256: ""
+    approval_record:
+      uri: "sdo/operations/SDO-YYYYMMDD-NNN/approval-record.yaml"
+      status: "missing | pending | approved | rejected | hold | emergency-approved | accepted-risk"
+      sha256: ""
+    execution_record:
+      uri: "sdo/operations/SDO-YYYYMMDD-NNN/execution-record.md"
+      status: "missing | pending | completed | failed | rolled-back"
+      sha256: ""
+    validation_report:
+      uri: "sdo/operations/SDO-YYYYMMDD-NNN/validation-report.md"
+      status: "missing | pending | passed | failed | partial | inconclusive"
+      sha256: ""
+    evidence_package:
+      uri: "sdo/operations/SDO-YYYYMMDD-NNN/evidence-package.yaml"
+      status: "missing | open | complete | incomplete | redaction-required | closed"
+      sha256: ""
+    review_record:
+      uri: "sdo/operations/SDO-YYYYMMDD-NNN/review-record.md"
+      status: "missing | draft | completed"
+      sha256: ""
+    archive_record:
+      uri: "sdo/operations/SDO-YYYYMMDD-NNN/archive-record.md"
+      status: "missing | ready | archived"
+      sha256: ""
+
+  approval_refs:
+    - approval_id: "APR-001"
+      uri: "sdo/operations/SDO-YYYYMMDD-NNN/approval-record.yaml"
+      decision: "pending | approved | rejected | hold | emergency-approved | accepted-risk"
+      approved_scope_ref: ""
+      decided_at_utc: ""
+
+  policy_refs:
+    tool_execution_policy_ref: ""
+    autonomy_policy_ref: ""
+    evidence_policy_ref: ""
+    retention_policy_ref: ""
+    a6_preapproved_policy_ref: ""
+
+  evidence_refs:
+    - evidence_item_id: "EVI-001"
+      uri: ""
+      source_ref: ""
+      sha256: ""
+      redaction_status: "not-needed | pending | redacted | blocked"
+
+  dependency_state:
+    # The orchestrator evaluates these from artifacts, not chat history.
+    operation_identity_confirmed: false
+    spec_ready: false
+    runbook_ready: false
+    approval_ready: false
+    policy_ready: false
+    rollback_or_recovery_ready: false
+    execution_record_ready: false
+    validation_ready: false
+    evidence_ready: false
+    review_ready: false
+
+  deviations:
+    - deviation_id: "DEV-001"
+      severity: "low | medium | high | critical"
+      description: ""
+      status: "open | accepted-risk | corrected | follow-up-required"
+      evidence_ref: ""
+
+  blockers:
+    - blocker_id: "BLK-001"
+      phase: "init | new | plan | approval-check | execute | validate | review | archive | continue"
+      reason: ""
+      required_action: ""
+      owner: ""
+      status: "open | resolved | accepted-risk"
+
+  archive:
+    status: "not-ready | ready | archived"
+    immutable_storage_ref: ""
+    final_manifest_sha256: ""
+    archived_at_utc: ""
+    archived_by: ""

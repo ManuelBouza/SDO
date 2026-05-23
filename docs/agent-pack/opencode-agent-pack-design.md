@@ -370,6 +370,7 @@ agent-pack/
       artifact-contract.yaml
       registry.yaml
       preflight-checklist.md
+      dependency-gates.md
   installers/
     install-opencode-pack.md
 ```
@@ -390,7 +391,7 @@ The first implementation can be file-copy based. A richer installer can come lat
 
 ## MVP Sequence
 
-1. Define shared protocol assets: phase result envelope, artifact contract, preflight checklist, and dependency gates.
+1. Define shared protocol assets: phase result envelope, artifact contract, preflight checklist, and dependency gates. Initial MVP assets now live under [`../../agent-pack/opencode/shared/`](../../agent-pack/opencode/shared/).
 2. Create file-based artifact store conventions and manifest template.
 3. Implement standalone `sdo-orchestrator` and the minimal `/sdo-init`, `/sdo-new`, `/sdo-plan`, `/sdo-approval-check`, and `/sdo-continue` commands.
 4. Add read-only validation and evidence packaging commands before state-changing execution.
