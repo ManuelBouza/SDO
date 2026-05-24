@@ -42,12 +42,12 @@ Out of scope for the first implementation:
 | SDO-Orchestrator is native runtime | When Gentle is absent or not desired, SDO installs an independent orchestrator that owns SDO phase routing and gates. |
 | Commands stay thin | Slash commands collect intent and call the orchestrator or phase agent; they should not duplicate lifecycle logic. |
 | Phase agents stay narrow | Each agent should produce or verify one artifact class or gate decision. |
-| `AGENTS.md` is the agent-facing index | The OpenCode pack includes a mergeable instruction layer that tells agents which SDO skills to load before work, inspired by Gentle AI's root skill index pattern. |
+| `AGENTS.md` is global protocol guidance | The OpenCode pack includes a marker-friendly instruction block for global SDO protocol reminders only. It is not a skill index, command registry, or orchestrator router. |
 | Gates fail closed | Missing spec, approval, policy, evidence, or dependency state should stop progress, not be inferred. |
 | Evidence is referenced, not dumped | Store evidence indexes, hashes, source references, and summaries; avoid raw logs unless needed and redacted. |
 | Manual compatibility remains mandatory | Every artifact should remain understandable and executable by humans without OpenCode. |
 
-Gentle AI's separation of shared assets from per-agent packaging is an architectural inspiration for this boundary. Its root `AGENTS.md` also informs the SDO OpenCode pack's agent-facing skill index, where agents are instructed to load relevant skills before SDO work. Gentle AI is not a runtime dependency for SDO.
+Gentle AI's separation of shared assets from per-agent packaging is an architectural inspiration for this boundary. Its current OpenCode install behavior keeps `~/.config/opencode/AGENTS.md` focused on global instructions and protocol sections, while runtime routing lives in OpenCode configuration, commands, and skills. SDO follows that separation. Gentle AI is not a runtime dependency for SDO.
 
 ## Runtime Modes
 
@@ -79,7 +79,7 @@ Use this mode when Gentle-Orchestrator is absent or the user chooses an independ
 
 The SDO pack should install:
 
-- `sdo-orchestrator` as the root OpenCode agent;
+- `sdo-orchestrator` as an OpenCode agent configured in `opencode.json` or a generated overlay;
 - `/sdo-*` commands routed directly to `sdo-orchestrator`;
 - SDO phase agents when they exist;
 - SDO skills and shared protocol files;
@@ -208,7 +208,7 @@ Do not store secrets, unnecessary personal data, raw `.env` values, or full tran
 
 Commands are user-facing OpenCode entry points. They should collect intent, resolve the target `SDO ID`, call the active orchestrator, and return the phase result envelope.
 
-Initial command assets for `/sdo-init` and `/sdo-new` now exist under runtime-specific directories. Gentle integration commands route to `gentle-orchestrator`; standalone commands route to `sdo-orchestrator`. The command bodies remain thin wrappers and defer phase coordination to the active orchestrator.
+Initial command assets for `/sdo-init` and `/sdo-new` now exist under runtime-specific directories. Gentle integration commands route to `gentle-orchestrator`; standalone commands route to `sdo-orchestrator`. The command bodies remain thin wrappers and defer phase coordination to the active orchestrator, which must be registered through OpenCode config rather than inferred from `AGENTS.md`.
 
 | Command | Status | Purpose | Primary output |
 |---|---|---|---|
@@ -226,7 +226,7 @@ Initial command assets for `/sdo-init` and `/sdo-new` now exist under runtime-sp
 
 | Agent | Responsibility | Notes |
 |---|---|---|
-| `sdo-orchestrator` | Route commands, enforce dependencies, run preflight, interpret phase results. | Standalone asset now exists for `/sdo-init` and `/sdo-new`; it is a coordinator, not an executor. |
+| `sdo-orchestrator` | Route commands, enforce dependencies, run preflight, interpret phase results. | Standalone config overlay now exists for `/sdo-init` and `/sdo-new`; it is a coordinator, not an executor. |
 | `sdo-init` | Inspect OpenCode environment, install assets, verify storage and policy settings. | Shared by both modes. |
 | `sdo-classify` | Classify operation type, risk, profile, autonomy ceiling, and required gates. | Should not execute tools beyond read-only context gathering. |
 | `sdo-spec` | Draft or refine the Operational Spec as an agent contract. | Must surface missing invariants instead of guessing. |
@@ -244,7 +244,7 @@ SDO skills should follow OpenCode/Gentle-style skill directories with `SKILL.md`
 
 Initial skill assets now exist under [`../../agent-pack/opencode/skills/`](../../agent-pack/opencode/skills/). They define shared instructions for protocol gates, file-based artifact state, and Operational Spec authoring so future commands, orchestrators, and phase agents can reference common contracts instead of duplicating logic.
 
-The OpenCode pack also includes [`../../agent-pack/opencode/AGENTS.md`](../../agent-pack/opencode/AGENTS.md) as an installable or mergeable agent-facing instruction layer. It follows Gentle AI's pattern: a short loading rule, usage instructions, a skills table with triggers and paths, command/runtime notes, and hard rules for source-of-truth artifacts and fail-closed behavior.
+The OpenCode pack also includes [`../../agent-pack/opencode/AGENTS.md`](../../agent-pack/opencode/AGENTS.md) as an optional, marker-friendly global-instructions block for protocol reminders. It intentionally does not list SDO skills, command routes, or orchestrator mappings. Skills remain discoverable through OpenCode skill packaging and configuration; command routing remains in command assets plus `opencode.json` agent configuration.
 
 Although these skills are packaged for OpenCode today, their protocol and methodology guidance should remain portable in content. OpenCode-specific frontmatter, trigger wording, or installation paths belong at the adapter boundary.
 
@@ -260,9 +260,9 @@ Initial skill categories:
 - `sdo-validation` for independent validation behavior;
 - `sdo-review-archive` for review and archive closure.
 
-The pack should include a shared resolver or registry pattern inspired by Gentle AI:
+The pack may later include a shared resolver or registry pattern inspired by Gentle AI:
 
-- keep a generated or maintained skill index;
+- keep generated or maintained metadata outside `AGENTS.md`;
 - map command and phase names to required skills;
 - expose dependency and preflight requirements in metadata;
 - allow Gentle integration mode to register SDO skills without overwriting existing SDD skills;
@@ -327,10 +327,10 @@ The adapter should make SDO feel native inside Gentle while keeping the conceptu
 
 Installation in standalone mode should:
 
-1. Install `sdo-orchestrator` as the root agent for SDO commands.
+1. Register `sdo-orchestrator` in `opencode.json` or a generated OpenCode config overlay for SDO commands.
 2. Install SDO skills and, later, SDO phase agents when those assets exist.
 3. Configure the selected artifact store.
-4. Generate or refresh the SDO skill registry.
+4. Generate or refresh SDO skill metadata outside `AGENTS.md` when such metadata exists.
 5. Run preflight to confirm commands can resolve the orchestrator and artifact path.
 6. Leave Gentle and SDD configuration untouched if present.
 
@@ -355,6 +355,7 @@ agent-pack/
         sdo-new.md
     standalone/
       INSTALL.md
+      opencode.overlay.json
       agents/
         README.md
         sdo-orchestrator.md
@@ -362,16 +363,8 @@ agent-pack/
         sdo-init.md
         sdo-new.md
     agents/
-      sdo-init.md
-      sdo-classify.md
-      sdo-spec.md
-      sdo-runbook.md
-      sdo-approval.md
-      sdo-execute.md
-      sdo-validate.md
-      sdo-evidence.md
-      sdo-review.md
-      sdo-archive.md
+      # future phase-agent source prompts only;
+      # runtime registration belongs in opencode.json overlays
     skills/
       README.md
       sdo-shared-protocol/
@@ -398,7 +391,6 @@ agent-pack/
       operation-layout.md
       manifest-template.yaml
       artifact-state-machine.md
-      registry.yaml
       preflight-checklist.md
       dependency-gates.md
   installers/
@@ -436,12 +428,13 @@ The likely future shape is:
 2. Define file-based artifact store conventions, a copyable starter manifest, and artifact lifecycle state machine.
 3. Add initial thin `/sdo-init` and `/sdo-new` command assets split by runtime mode.
 4. Add initial reusable OpenCode skills for shared protocol, artifact store, and spec authoring.
-5. Add minimal `/sdo-plan`, `/sdo-approval-check`, and `/sdo-continue` commands and any required non-execution phase agents.
-6. Add read-only validation and evidence packaging commands before state-changing execution.
-7. Add `/sdo-execute` only after approval, autonomy, and tool policy gates are enforceable.
-8. Add Gentle integration adapter registration for the remaining `/sdo-*` commands, skills, and phase agents.
-9. Add `/sdo-review` and `/sdo-archive` closure behavior.
-10. Add optional Engram or hybrid indexing after file-based artifacts are stable.
+5. Add standalone `opencode.json` overlay generation for `sdo-orchestrator` and later phase-agent registration.
+6. Add minimal `/sdo-plan`, `/sdo-approval-check`, and `/sdo-continue` commands and any required non-execution phase agents.
+7. Add read-only validation and evidence packaging commands before state-changing execution.
+8. Add `/sdo-execute` only after approval, autonomy, and tool policy gates are enforceable.
+9. Add Gentle integration adapter registration for the remaining `/sdo-*` commands, skills, and phase agents.
+10. Add `/sdo-review` and `/sdo-archive` closure behavior.
+11. Add optional Engram or hybrid indexing after file-based artifacts are stable.
 
 ## Related References
 

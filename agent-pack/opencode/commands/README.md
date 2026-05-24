@@ -26,6 +26,8 @@ Commands are thin wrappers. They identify the workflow, provide runtime context,
 
 Commands must not perform SDO phase work inline. Phase work, dependency gates, artifact updates, and routing decisions belong to the active orchestrator and phase agents.
 
+The active orchestrator must be registered through OpenCode config, such as `opencode.json` or a generated overlay. Do not depend on `AGENTS.md` to route commands.
+
 ## Authoritative Contracts
 
 Shared contracts under `agent-pack/opencode/shared/` are authoritative for both runtime modes:

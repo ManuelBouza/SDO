@@ -39,8 +39,8 @@ This state machine defines how file-based SDO operation artifacts move from draf
 | `/sdo-plan` success | `draft` to `planned` | spec `draft` to `approved` when ready; runbook `missing` to `draft` or `approved` |
 | `/sdo-approval-check` needs approval | `planned` to `approval-required` | approval `missing` to `pending` |
 | `/sdo-approval-check` approved | `planned` or `approval-required` to `approved` | approval `pending` to `approved`, `emergency-approved`, or `accepted-risk` |
-| `/sdo-execute` started | `approved` to `executing` | execution `missing` to `pending` or `in-progress` |
-| `/sdo-execute` completed | `executing` to `validating` | execution to `completed`; evidence remains `open` or becomes `complete` |
+| Future execute phase started | `approved` to `executing` | execution `missing` to `pending` or `in-progress` |
+| Future execute phase completed | `executing` to `validating` | execution to `completed`; evidence remains `open` or becomes `complete` |
 | `/sdo-validate` passed | `validating` to `reviewing` | validation to `passed`; evidence updated |
 | `/sdo-review` completed | `reviewing` | review to `completed` or `accepted-risk`; archive to `ready` when closure gates pass |
 | `/sdo-archive` completed | `reviewing` to `archived` | archive to `archived`; evidence to `closed`; final hashes recorded |

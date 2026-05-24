@@ -7,7 +7,8 @@ The current MVP is easiest to test from this repository checkout because several
 ## Before You Start
 
 - Use this guide only for OpenCode. No Codex or Claude Code adapter exists yet.
-- Do not overwrite an existing project `AGENTS.md`. Merge the SDO block from `agent-pack/opencode/AGENTS.md` into the existing file instead.
+- Do not overwrite an existing `AGENTS.md`. Merge only the marker-delimited SDO protocol block from `agent-pack/opencode/AGENTS.md` when those global reminders are desired.
+- Register `sdo-orchestrator` through `opencode.json` or a generated overlay. Do not rely on `AGENTS.md` for command routing or skill discovery.
 - Restart OpenCode after installing or changing agents, commands, skills, or instruction files. OpenCode loads these assets at startup.
 
 ## Copy Map
@@ -16,11 +17,12 @@ Install the standalone assets into the target project using these canonical Open
 
 | Source | Target |
 |---|---|
-| `agent-pack/opencode/standalone/agents/sdo-orchestrator.md` | `.opencode/agent/sdo-orchestrator.md` |
+| `agent-pack/opencode/standalone/opencode.overlay.json` | merge into `opencode.json`, or load as an explicit/generated OpenCode config overlay |
+| `agent-pack/opencode/standalone/agents/sdo-orchestrator.md` | source prompt for generated overlays or manual review; do not install as the primary routing mechanism |
 | `agent-pack/opencode/standalone/commands/sdo-init.md` | `.opencode/command/sdo-init.md` |
 | `agent-pack/opencode/standalone/commands/sdo-new.md` | `.opencode/command/sdo-new.md` |
 | `agent-pack/opencode/skills/*` | `.opencode/skills/` |
-| `agent-pack/opencode/AGENTS.md` | Merge into project `AGENTS.md`, or place at root as `AGENTS.md` if none exists. |
+| `agent-pack/opencode/AGENTS.md` | Optional merge into `~/.config/opencode/AGENTS.md` or project `AGENTS.md` as protocol reminders only. |
 
 ### Shared Assets
 
@@ -40,18 +42,18 @@ If you copy shared assets into a target project, use `.opencode/sdo/shared/` as 
 
 ## Manual Installation
 
-1. Create the OpenCode directories if they do not already exist: `.opencode/agent/`, `.opencode/command/`, and `.opencode/skills/`.
-2. Copy `standalone/agents/sdo-orchestrator.md` to `.opencode/agent/sdo-orchestrator.md`.
+1. Create the OpenCode directories if they do not already exist: `.opencode/command/` and `.opencode/skills/`.
+2. Merge `standalone/opencode.overlay.json` into the target `opencode.json`, or load it as an explicit/generated OpenCode overlay.
 3. Copy `standalone/commands/sdo-init.md` and `standalone/commands/sdo-new.md` to `.opencode/command/`.
 4. Copy each directory under `agent-pack/opencode/skills/` into `.opencode/skills/`.
-5. Merge `agent-pack/opencode/AGENTS.md` into the project's root `AGENTS.md`, or add it as the root `AGENTS.md` when the project does not already have one.
+5. Optionally merge the marker-delimited protocol block from `agent-pack/opencode/AGENTS.md` into `~/.config/opencode/AGENTS.md` or a project `AGENTS.md`. Do not add skill indexes or routing tables there.
 6. Keep `agent-pack/opencode/shared/` available from the project root, or copy it to `.opencode/sdo/shared/` and update installed references consistently.
 7. Quit and restart OpenCode.
 
 ## Verification Checklist
 
 - [ ] OpenCode was restarted after copying assets.
-- [ ] The `sdo-orchestrator` agent is available.
+- [ ] The `sdo-orchestrator` agent is available from OpenCode config, not from `AGENTS.md` routing text.
 - [ ] `/sdo-init` routes to `sdo-orchestrator` and returns a success, blocked, or needs-human envelope.
 - [ ] `/sdo-new "test standalone operation"` routes to `sdo-orchestrator` and creates or blocks operation artifacts based on durable state.
 - [ ] Created artifacts, blockers, and stop reasons are visible in file artifacts or the returned envelope.
@@ -60,11 +62,11 @@ If you copy shared assets into a target project, use `.opencode/sdo/shared/` as 
 
 ## Uninstall
 
-1. Remove `.opencode/agent/sdo-orchestrator.md`.
+1. Remove the `agent.sdo-orchestrator` entry from the installed `opencode.json` or stop loading the generated overlay.
 2. Remove `.opencode/command/sdo-init.md` and `.opencode/command/sdo-new.md` if they came from this standalone pack.
 3. Remove `.opencode/skills/sdo-shared-protocol/`, `.opencode/skills/sdo-artifact-store/`, and `.opencode/skills/sdo-spec-authoring/` if they came from this standalone pack.
 4. Remove `.opencode/sdo/shared/` only if it was created solely for this pack and no operation artifacts depend on it.
-5. Remove the SDO block from the project `AGENTS.md`. Do not delete unrelated project guidance.
+5. Remove the marker-delimited SDO protocol block from `AGENTS.md` if it was installed. Do not delete unrelated project guidance.
 6. Restart OpenCode.
 
 ## Known Limitations
