@@ -1,6 +1,6 @@
 # Standalone OpenCode Agents
 
-This directory contains source prompt assets for standalone SDO mode. Runtime registration belongs in `opencode.json` or a generated overlay such as [`../opencode.overlay.json`](../opencode.overlay.json).
+This directory contains the standalone SDO OpenCode agent prompt assets. The agent markdown file is the prompt source of truth; [`../opencode.overlay.json`](../opencode.overlay.json) is only a companion config overlay for registration fields such as mode and permissions.
 
 ## Current MVP Scope
 
@@ -11,7 +11,7 @@ This directory contains source prompt assets for standalone SDO mode. Runtime re
 
 ## Installation Notes
 
-Installers should register agents through OpenCode configuration. For the current MVP, merge or generate an `opencode.json` overlay with `agent.sdo-orchestrator`, then install the standalone command assets in [`../commands/`](../commands/).
+Installers should install `sdo-orchestrator.md` as the OpenCode agent file, then merge or load the companion `opencode.json` overlay only for config fields that belong in OpenCode configuration. Do not copy the prompt body into `opencode.overlay.json`; that creates a second source that can drift.
 
 Do not use `AGENTS.md` as an agent registry, skill index, or routing table. `AGENTS.md` is only for mergeable global instruction and protocol reminders.
 

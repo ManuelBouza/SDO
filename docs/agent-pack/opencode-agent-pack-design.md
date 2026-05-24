@@ -79,7 +79,7 @@ Use this mode when Gentle-Orchestrator is absent or the user chooses an independ
 
 The SDO pack should install:
 
-- `sdo-orchestrator` as an OpenCode agent configured in `opencode.json` or a generated overlay;
+- `sdo-orchestrator` as an OpenCode agent file, with `opencode.json` or a generated overlay used only for companion config fields;
 - `/sdo-*` commands routed directly to `sdo-orchestrator`;
 - SDO phase agents when they exist;
 - SDO skills and shared protocol files;
@@ -327,7 +327,7 @@ The adapter should make SDO feel native inside Gentle while keeping the conceptu
 
 Installation in standalone mode should:
 
-1. Register `sdo-orchestrator` in `opencode.json` or a generated OpenCode config overlay for SDO commands.
+1. Install `sdo-orchestrator` as an OpenCode agent file for SDO commands, with any generated OpenCode config overlay kept prompt-free.
 2. Install SDO skills and, later, SDO phase agents when those assets exist.
 3. Configure the selected artifact store.
 4. Generate or refresh SDO skill metadata outside `AGENTS.md` when such metadata exists.

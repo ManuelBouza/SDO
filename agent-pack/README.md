@@ -48,7 +48,7 @@ See [`opencode/commands/README.md`](opencode/commands/README.md) for command pac
 
 ## Standalone Agent Assets
 
-The standalone `sdo-orchestrator` OpenCode agent is registered through [`opencode/standalone/opencode.overlay.json`](opencode/standalone/opencode.overlay.json). The source prompt asset also exists under [`opencode/standalone/agents/`](opencode/standalone/agents/) for generated overlays or manual review.
+The standalone `sdo-orchestrator` prompt is defined once in [`opencode/standalone/agents/sdo-orchestrator.md`](opencode/standalone/agents/sdo-orchestrator.md). The companion [`opencode/standalone/opencode.overlay.json`](opencode/standalone/opencode.overlay.json) contains only OpenCode config fields such as mode and permissions, so installers do not maintain a second prompt copy.
 
 It is a coordinator, not an executor. The current MVP supports command-routed `/sdo-init` and `/sdo-new` only, with routing, preflight checks, dependency gates, safe artifact preparation, and phase result envelopes. Phase agents and `/sdo-execute` are intentionally not included yet.
 
