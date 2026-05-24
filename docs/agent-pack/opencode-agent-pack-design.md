@@ -42,11 +42,12 @@ Out of scope for the first implementation:
 | SDO-Orchestrator is native runtime | When Gentle is absent or not desired, SDO installs an independent orchestrator that owns SDO phase routing and gates. |
 | Commands stay thin | Slash commands collect intent and call the orchestrator or phase agent; they should not duplicate lifecycle logic. |
 | Phase agents stay narrow | Each agent should produce or verify one artifact class or gate decision. |
+| `AGENTS.md` is the agent-facing index | The OpenCode pack includes a mergeable instruction layer that tells agents which SDO skills to load before work, inspired by Gentle AI's root skill index pattern. |
 | Gates fail closed | Missing spec, approval, policy, evidence, or dependency state should stop progress, not be inferred. |
 | Evidence is referenced, not dumped | Store evidence indexes, hashes, source references, and summaries; avoid raw logs unless needed and redacted. |
 | Manual compatibility remains mandatory | Every artifact should remain understandable and executable by humans without OpenCode. |
 
-Gentle AI's separation of shared assets from per-agent packaging is an architectural inspiration for this boundary. It is not a runtime dependency for SDO.
+Gentle AI's separation of shared assets from per-agent packaging is an architectural inspiration for this boundary. Its root `AGENTS.md` also informs the SDO OpenCode pack's agent-facing skill index, where agents are instructed to load relevant skills before SDO work. Gentle AI is not a runtime dependency for SDO.
 
 ## Runtime Modes
 
@@ -243,6 +244,8 @@ SDO skills should follow OpenCode/Gentle-style skill directories with `SKILL.md`
 
 Initial skill assets now exist under [`../../agent-pack/opencode/skills/`](../../agent-pack/opencode/skills/). They define shared instructions for protocol gates, file-based artifact state, and Operational Spec authoring so future commands, orchestrators, and phase agents can reference common contracts instead of duplicating logic.
 
+The OpenCode pack also includes [`../../agent-pack/opencode/AGENTS.md`](../../agent-pack/opencode/AGENTS.md) as an installable or mergeable agent-facing instruction layer. It follows Gentle AI's pattern: a short loading rule, usage instructions, a skills table with triggers and paths, command/runtime notes, and hard rules for source-of-truth artifacts and fail-closed behavior.
+
 Although these skills are packaged for OpenCode today, their protocol and methodology guidance should remain portable in content. OpenCode-specific frontmatter, trigger wording, or installation paths belong at the adapter boundary.
 
 Initial skill categories:
@@ -343,6 +346,7 @@ This is the OpenCode MVP layout. It keeps shared SDO assets under `opencode/shar
 agent-pack/
   README.md
   opencode/
+    AGENTS.md
     commands/
       README.md
     gentle-integration/
@@ -350,6 +354,7 @@ agent-pack/
         sdo-init.md
         sdo-new.md
     standalone/
+      INSTALL.md
       agents/
         README.md
         sdo-orchestrator.md

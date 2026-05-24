@@ -26,6 +26,7 @@ No Codex or Claude Code adapter exists yet.
 
 ## Shared Assets
 
+- [`opencode/AGENTS.md`](opencode/AGENTS.md) is the installable or mergeable agent-facing skill index for projects using the SDO OpenCode pack.
 - [`opencode/shared/phase-result-envelope.yaml`](opencode/shared/phase-result-envelope.yaml) defines the compact handoff contract returned by phase agents, skills, and commands.
 - [`opencode/shared/artifact-contract.yaml`](opencode/shared/artifact-contract.yaml) defines the file-based operation manifest and artifact graph.
 - [`opencode/shared/operation-layout.md`](opencode/shared/operation-layout.md) defines the default operation directory layout, SDO ID naming, source-of-truth rules, safe updates, external references, and evidence handling.
@@ -50,6 +51,8 @@ See [`opencode/commands/README.md`](opencode/commands/README.md) for command pac
 The standalone `sdo-orchestrator` OpenCode agent asset now exists under [`opencode/standalone/agents/`](opencode/standalone/agents/).
 
 It is a coordinator, not an executor. The current MVP supports command-routed `/sdo-init` and `/sdo-new` only, with routing, preflight checks, dependency gates, safe artifact preparation, and phase result envelopes. Phase agents and `/sdo-execute` are intentionally not included yet.
+
+For manual standalone testing, see [`opencode/standalone/INSTALL.md`](opencode/standalone/INSTALL.md).
 
 ## Skill Assets
 
